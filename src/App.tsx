@@ -15,7 +15,6 @@ const App = () => {
   const [gameResult, setGameResult] = useState<string | null>(null);
   const [pendingWinCheck, setPendingWinCheck] = useState(false);
   const [eliminatedWhite, setEliminatedWhite] = useState<Player | null>(null);
-  const [language, setLanguage] = useState<Language>("english");
 
   const handleStart = (
     initialPlayers: Player[],
