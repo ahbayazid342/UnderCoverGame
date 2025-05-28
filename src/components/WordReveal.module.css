@@ -1,5 +1,5 @@
 .container {
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
@@ -70,7 +70,7 @@
 }
 
 .word {
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   font-weight: bold;
   margin: 1.5rem 0;
   background: linear-gradient(45deg, #f472b6, #db2777);
@@ -83,6 +83,11 @@
   color: rgba(255, 255, 255, 0.6);
   font-style: italic;
   margin-top: 1rem;
+}
+
+.modalContent {
+  width: min(90%, 400px);
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 @keyframes slideIn {
@@ -100,4 +105,14 @@
   0% { opacity: 0.8; }
   50% { opacity: 1; }
   100% { opacity: 0.8; }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
 }
