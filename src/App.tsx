@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import PlayerSetup from "./components/playerSetup";
 import VotingPhase from "./components/votingPhase";
 import WordReveal from "./components/wordReveal";
+import WhiteGuess from './components/WhiteGuess';
 import { Player, assignRolesAndWords } from "./Utility/utility";
 import styles from './App.module.css';
 
 const App = () => {
-  const [phase, setPhase] = useState<"setup" | "reveal" | "voting" | "end">(
+  const [phase, setPhase] = useState<"setup" | "reveal" | "voting" | "whiteGuess" | "end">(
     "setup"
   );
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameResult, setGameResult] = useState<string | null>(null);
   const [pendingWinCheck, setPendingWinCheck] = useState(false);
+  const [eliminatedWhite, setEliminatedWhite] = useState<Player | null>(null);
 
   const handleStart = (
     initialPlayers: Player[],
@@ -54,11 +56,28 @@ const App = () => {
   };
 
   const handleEliminate = (playerId: number) => {
+    const eliminatedPlayer = players.find(p => p.id === playerId);
     const updatedPlayers = players.map((p) =>
       p.id === playerId ? { ...p, isAlive: false } : p
     );
+    
     setPlayers(updatedPlayers);
-    setPendingWinCheck(true);
+
+    if (eliminatedPlayer?.role === 'white') {
+      setEliminatedWhite(eliminatedPlayer);
+      setPhase('whiteGuess');
+    } else {
+      setPendingWinCheck(true);
+    }
+  };
+
+  const handleWhiteGuess = (isCorrect: boolean) => {
+    if (isCorrect) {
+      setGameResult("Civilians Lost! Mr. White guessed correctly!");
+    } else {
+      setGameResult("Civilians Win! Mr. White guessed wrong!");
+    }
+    setPhase("end");
   };
 
   const handleContinueAfterElimination = () => {
@@ -91,6 +110,13 @@ const App = () => {
             players={players} 
             onEliminate={handleEliminate}
             onContinue={handleContinueAfterElimination}
+          />
+        )}
+        {phase === "whiteGuess" && eliminatedWhite && (
+          <WhiteGuess
+            eliminatedPlayer={eliminatedWhite}
+            correctWord={players.find(p => p.role === "civilian")?.word || ""}
+            onGuessSubmit={handleWhiteGuess}
           />
         )}
         {phase === "end" && (
