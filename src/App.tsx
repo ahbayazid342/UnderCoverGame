@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import PlayerSetup from "./components/playerSetup";
 
-function App() {
+const App = () => {
+  const [phase, setPhase] = useState<"setup" | "reveal">("setup");
+  const [players, setPlayers] = useState([]);
+  const [undercoverCount, setUndercoverCount] = useState(1);
+  const [includeMrWhite, setIncludeMrWhite] = useState(false);
+  console.log(players);
+  console.log(undercoverCount);
+  console.log(includeMrWhite);
+
+  const handleStart = (players: any, undercoverCount: number, includeMrWhite: boolean) => {
+    setPlayers(players);
+    setUndercoverCount(undercoverCount);
+    setIncludeMrWhite(includeMrWhite);
+    setPhase("reveal");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {phase === "setup" && <PlayerSetup onStart={handleStart} />}
+      {phase === "reveal" && <div>TODO: Word Reveal Screen</div>}
+    </>
   );
-}
+};
 
 export default App;
