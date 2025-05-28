@@ -1,4 +1,4 @@
-import { WordPair, wordPairs } from "../data/wordPair";
+import { getWordPairs, WordPair, Language } from "../data/wordPair";
 
 export type Role = "civilian" | "undercover" | "white";
 
@@ -22,7 +22,8 @@ function shuffleArray<T>(array: T[]): T[] {
 export function assignRolesAndWords(
   players: Player[],
   undercoverCount: number,
-  includeMrWhite: boolean
+  includeMrWhite: boolean,
+  language: Language
 ): { playersWithRoles: Player[]; wordPair: WordPair } {
   const totalPlayers = players.length;
   
@@ -44,8 +45,9 @@ export function assignRolesAndWords(
     isAlive: true,
   }));
 
-  // Pick a random word pair
-  const wordPair = wordPairs[Math.floor(Math.random() * wordPairs.length)];
+  // Pick a random word pair from selected language
+  const availableWords = getWordPairs(language);
+  const wordPair = availableWords[Math.floor(Math.random() * availableWords.length)];
 
   // Assign words based on roles
   const playersWithWords = assignedPlayers.map((player) => ({

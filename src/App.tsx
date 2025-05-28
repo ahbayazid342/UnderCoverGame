@@ -4,6 +4,7 @@ import VotingPhase from "./components/votingPhase";
 import WordReveal from "./components/wordReveal";
 import WhiteGuess from './components/WhiteGuess';
 import { Player, assignRolesAndWords } from "./Utility/utility";
+import { Language } from "./data/wordPair";
 import styles from './App.module.css';
 
 const App = () => {
@@ -14,16 +15,19 @@ const App = () => {
   const [gameResult, setGameResult] = useState<string | null>(null);
   const [pendingWinCheck, setPendingWinCheck] = useState(false);
   const [eliminatedWhite, setEliminatedWhite] = useState<Player | null>(null);
+  const [language, setLanguage] = useState<Language>("english");
 
   const handleStart = (
     initialPlayers: Player[],
     undercovers: number,
-    includeMrWhite: boolean
+    includeMrWhite: boolean,
+    language: Language
   ) => {
     const { playersWithRoles } = assignRolesAndWords(
       initialPlayers,
       undercovers,
-      includeMrWhite
+      includeMrWhite,
+      language
     );
     setPlayers(playersWithRoles);
     setPhase("reveal");

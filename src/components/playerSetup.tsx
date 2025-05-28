@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Language } from "../data/wordPair";
 import styles from './PlayerSetup.module.css';
 
 type Role = "civilian" | "undercover" | "white";
@@ -11,7 +12,12 @@ interface Player {
 }
 
 interface Props {
-  onStart: (players: Player[], undercoverCount: number, includeMrWhite: boolean) => void;
+  onStart: (
+    players: Player[],
+    undercoverCount: number,
+    includeMrWhite: boolean,
+    language: Language
+  ) => void;
 }
 
 const PlayerSetup: React.FC<Props> = ({ onStart }) => {
@@ -19,6 +25,7 @@ const PlayerSetup: React.FC<Props> = ({ onStart }) => {
   const [playerNames, setPlayerNames] = useState<string[]>([]);
   const [undercoverCount, setUndercoverCount] = useState(1);
   const [includeMrWhite, setIncludeMrWhite] = useState(false);
+  const [language, setLanguage] = useState<Language>("english");
 
   const handleNameChange = (index: number, name: string) => {
     const names = [...playerNames];
@@ -30,16 +37,28 @@ const PlayerSetup: React.FC<Props> = ({ onStart }) => {
     const players: Player[] = playerNames.map((name, index) => ({
       id: index,
       name: name || `Player ${index + 1}`,
-      role: "civilian", // to be updated later
+      role: "civilian",
       isAlive: true,
     }));
 
-    onStart(players, undercoverCount, includeMrWhite);
+    onStart(players, undercoverCount, includeMrWhite, language);
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Undercover Game Setup</h1>
+
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Select Language</label>
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value as Language)}
+          className={styles.select}
+        >
+          <option value="english">English</option>
+          <option value="bangla">Bangla</option>
+        </select>
+      </div>
 
       <div className={styles.formGroup}>
         <label className={styles.label}>Number of Players (3-12)</label>
