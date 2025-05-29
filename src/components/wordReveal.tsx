@@ -39,9 +39,6 @@ const WordReveal: React.FC<Props> = ({ players, onFinish }) => {
           </>
         ) : (
           <div>
-            <p className={styles.role}>
-              Role: <span className="capitalize">{currentPlayer.role}</span>
-            </p>
             {currentPlayer.role !== "white" ? (
               <p className={styles.word}>{currentPlayer.word}</p>
             ) : (
