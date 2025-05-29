@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/UnderCoverGame/static/css/main.be1b0dca.css",
+    "main.js": "/UnderCoverGame/static/js/main.653137f3.js",
+    "static/js/453.54241a08.chunk.js": "/UnderCoverGame/static/js/453.54241a08.chunk.js",
+    "index.html": "/UnderCoverGame/index.html",
+    "main.be1b0dca.css.map": "/UnderCoverGame/static/css/main.be1b0dca.css.map",
+    "main.653137f3.js.map": "/UnderCoverGame/static/js/main.653137f3.js.map",
+    "453.54241a08.chunk.js.map": "/UnderCoverGame/static/js/453.54241a08.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be1b0dca.css",
+    "static/js/main.653137f3.js"
+  ]
+}
